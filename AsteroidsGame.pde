@@ -1,5 +1,6 @@
 Star [] stars = new Star [100];
 Spaceship ship = new Spaceship();
+ArrayList <Asteroid> asteroids = new ArrayList <Asteroid>();
 boolean isLeft = false;
 boolean isRight = false;
 boolean isAccelerate = false;
@@ -13,6 +14,9 @@ public void setup()
 
   for (int g = 0; g <100; g++){
       stars[g] = new Star();
+    }
+  for (int i = 0; i <12; i++){
+      asteroids.add(new Asteroid());
     }
   }
   
@@ -34,9 +38,19 @@ void keyReleased() {
 
 public void draw() 
 {
-  background(0);
+ background(0);
+ for (int i = 0; i <asteroids.size(); i++){
+      asteroids.get(i).move();
+      asteroids.get(i).show();
+    }
  for (int i = 0; i < stars.length; i ++){
    stars[i].show();
+ }
+ for (int i = 0; i <asteroids.size(); i ++){
+   if(dist((float)ship.getX(), (float)ship.getY(), (float)asteroids.get(i).getX(), (float)asteroids.get(i).getY()) <20){
+       asteroids.remove(i);
+       i--;
+   }
  }
  if (isLeft){
    ship.turn(-6.0);
